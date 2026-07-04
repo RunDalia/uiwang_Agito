@@ -9,6 +9,8 @@ import {
 } from '../utils/dateUtils';
 
 const MAX_MONTH_OFFSET = 11; // 이번 달 포함 최대 12개월
+const NOTE_KEY = '비고';
+const NOTE_MAX_LENGTH = 100;
 
 function ScheduleSection({
   monthOffset,
@@ -65,6 +67,7 @@ function ScheduleSection({
             {LITURGY_PARTS.map((part) => (
               <col key={part} />
             ))}
+            <col className="col-note" />
           </colgroup>
           <thead>
             <tr>
@@ -72,6 +75,7 @@ function ScheduleSection({
               {LITURGY_PARTS.map((part) => (
                 <th key={part}>{part}</th>
               ))}
+              <th>비고</th>
             </tr>
           </thead>
           <tbody>
@@ -97,6 +101,20 @@ function ScheduleSection({
                       />
                     </td>
                   ))}
+                  <td>
+                    {isAdmin ? (
+                      <input
+                        type="text"
+                        className="note-input"
+                        maxLength={NOTE_MAX_LENGTH}
+                        value={weekData[NOTE_KEY] || ''}
+                        onChange={(e) => onChangeSlot(monthKey, week.label, NOTE_KEY, e.target.value)}
+                        placeholder="비고"
+                      />
+                    ) : (
+                      <div className="slot-value">{weekData[NOTE_KEY] || '-'}</div>
+                    )}
+                  </td>
                 </tr>
               );
             })}
