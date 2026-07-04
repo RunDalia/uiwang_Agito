@@ -71,10 +71,14 @@ function formatGospelAcclamation(text) {
     .trim();
 }
 
-// 보편지향기도: 맨 앞 "<...>" 안내문구를 제거하고, "1." "2." 같은 항목 번호 앞에서 줄바꿈한다.
+// 보편지향기도: 맨 앞 "<...>" 안내문구를 제거하고, "~기도합시다." 다음(기도문 시작 지점)과
+// "1." "2." 같은 항목 번호 앞에서 줄바꿈한다.
 function formatUniversalPrayer(text) {
   const withoutNote = text.replace(/^\s*<[^>]*>\s*/, '');
-  return withoutNote.replace(/(\d{1,2}\.)(?=\s?[가-힣])/g, '\n$1').trim();
+  return withoutNote
+    .replace(/(기도합시다\.)\s*/g, '$1\n')
+    .replace(/(\d{1,2}\.)(?=\s?[가-힣])/g, '\n$1')
+    .trim();
 }
 
 // el(자신 포함) 안에 몇 개의 "섹션 라벨 제목"이 들어있는지 센다.
