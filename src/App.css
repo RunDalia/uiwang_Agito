@@ -178,8 +178,11 @@
 
 .mass-field-value {
   color: var(--color-text);
-  white-space: pre-line;
   line-height: 1.6;
+}
+
+.mass-line-bold {
+  font-weight: 700;
 }
 
 /* ---------- Schedule section ---------- */

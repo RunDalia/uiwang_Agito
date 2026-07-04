@@ -12,6 +12,26 @@ const FIELDS = [
   { key: 'universalPrayer', label: '보편지향기도' },
 ];
 
+// 필드별로 굵게 표시할 줄을 판단하는 규칙
+const BOLD_LINE_RULES = {
+  firstReading: (line, idx, lines) => line.startsWith('▥') || (idx === lines.length - 1 && line.startsWith('◎')),
+  secondReading: (line, idx, lines) => line.startsWith('▥') || (idx === lines.length - 1 && line.startsWith('◎')),
+  gospel: (line, idx, lines) => line.startsWith('✠') || (idx === lines.length - 1 && line.includes('◎')),
+  responsorialPsalm: (line, idx) => idx === 0,
+  universalPrayer: (line) => /^\d+\.\s/.test(line),
+};
+
+function renderFieldValue(text, key) {
+  if (!text) return '-';
+  const lines = text.split('\n');
+  const isBold = BOLD_LINE_RULES[key];
+  return lines.map((line, idx) => (
+    <div key={idx} className={isBold?.(line, idx, lines) ? 'mass-line-bold' : undefined}>
+      {line}
+    </div>
+  ));
+}
+
 function MassInfoSection() {
   // mode: 'today' | 'saturday'
   const [mode, setMode] = useState('today');
@@ -88,7 +108,7 @@ function MassInfoSection() {
           {FIELDS.map(({ key, label }) => (
             <div className="mass-field" key={key}>
               <div className="mass-field-label">{label}</div>
-              <div className="mass-field-value">{data[key] || '-'}</div>
+              <div className="mass-field-value">{renderFieldValue(data[key], key)}</div>
             </div>
           ))}
         </div>
