@@ -1,0 +1,40 @@
+:root {
+  --color-navy: #0f3d63;
+  --color-sky: #2f80c1;
+  --color-sky-light: #eaf3fa;
+  --color-white: #ffffff;
+  --color-bg: #f4f8fb;
+  --color-border: #dce6ee;
+  --color-text: #223344;
+  --color-text-muted: #6b7c8c;
+
+  color-scheme: light;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font: 16px/1.5 'Pretendard', system-ui, 'Segoe UI', 'Malgun Gothic', Roboto, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+select, input {
+  font: inherit;
+}

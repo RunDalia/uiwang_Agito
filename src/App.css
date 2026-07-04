@@ -1,0 +1,373 @@
+.app-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+.app-header-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.app-header-sub {
+  font-size: 14px;
+  color: #bcd6ea;
+  letter-spacing: 0.02em;
+}
+
+.app-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.admin-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: var(--color-white);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  transition: background 0.15s ease;
+}
+
+.admin-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.admin-toggle-active {
+  background: var(--color-sky);
+  border-color: var(--color-sky);
+  font-weight: 600;
+}
+
+/* ---------- Layout ---------- */
+.app-main {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 10px rgba(15, 61, 99, 0.05);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 18px;
+  color: var(--color-navy);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  padding: 8px 14px;
+  font-size: 13px;
+  background: var(--color-white);
+  color: var(--color-navy);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-sky);
+  border-color: var(--color-sky);
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #276ba3;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-sky-light);
+}
+
+.btn-tab {
+  border-radius: 999px;
+}
+
+.btn-tab-active {
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* ---------- Mass info section ---------- */
+.mass-mode-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.mass-info-note {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  background: var(--color-sky-light);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.mass-info-status {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.mass-info-error {
+  color: #b3452c;
+}
+
+.missa-title {
+  color: var(--color-navy);
+  font-size: 17px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-sky-light);
+}
+
+.mass-field {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+}
+
+.mass-field:last-child {
+  border-bottom: none;
+}
+
+.mass-field-label {
+  color: var(--color-sky);
+  font-weight: 600;
+}
+
+.mass-field-value {
+  color: var(--color-text);
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+/* ---------- Schedule section ---------- */
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.month-label {
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+  table-layout: fixed;
+}
+
+.schedule-table .col-week {
+  width: 96px;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid var(--color-border);
+  padding: 10px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.schedule-table thead th {
+  background: var(--color-sky-light);
+  color: var(--color-navy);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.week-cell {
+  background: #fbfdfe;
+  font-weight: 600;
+  color: var(--color-navy);
+  font-size: 13px;
+  white-space: normal;
+  word-break: keep-all;
+}
+
+.schedule-table tbody tr.week-highlight td {
+  background: #fff8cc;
+}
+
+.week-date {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.slot-value {
+  font-size: 14px;
+}
+
+.slot-select,
+.slot-text-input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  background: var(--color-white);
+  color: var(--color-text);
+}
+
+.slot-select:focus,
+.slot-text-input:focus {
+  outline: 2px solid var(--color-sky);
+  outline-offset: 1px;
+}
+
+.save-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.save-status {
+  font-size: 13px;
+  color: var(--color-sky);
+  font-weight: 600;
+}
+
+/* ---------- Member management section ---------- */
+.member-group {
+  margin-bottom: 14px;
+}
+
+.member-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.member-group-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-sky);
+  margin-bottom: 8px;
+}
+
+.member-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.member-chip {
+  background: var(--color-sky-light);
+  color: var(--color-navy);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 13px;
+}
+
+.member-empty {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.member-add-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.member-add-form select,
+.member-add-form input {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13px;
+  background: var(--color-white);
+  color: var(--color-text);
+}
+
+.member-add-form input {
+  flex: 1;
+  min-width: 140px;
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    padding: 16px;
+  }
+
+  .app-main {
+    padding: 16px;
+  }
+
+  .mass-field {
+    grid-template-columns: 68px 1fr;
+    gap: 8px;
+  }
+
+  .schedule-table .col-week {
+    width: 72px;
+  }
+
+  .week-cell {
+    font-size: 11px;
+  }
+
+  .week-date {
+    font-size: 10px;
+  }
+}
