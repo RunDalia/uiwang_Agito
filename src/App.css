@@ -305,6 +305,58 @@
   font-weight: 600;
 }
 
+/* ---------- Hymn section ---------- */
+.hymn-week + .hymn-week {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+}
+
+.hymn-week-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+}
+
+.hymn-week-highlight .hymn-week-title span {
+  background: #fff8cc;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.hymn-week-date {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-left: 6px;
+}
+
+.hymn-row {
+  display: grid;
+  grid-template-columns: 72px 56px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.hymn-part {
+  color: var(--color-sky);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hymn-number {
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.hymn-empty {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
 /* ---------- Login modal ---------- */
 .modal-backdrop {
   position: fixed;
@@ -387,6 +439,11 @@
 
   .month-label {
     font-size: 14px;
+  }
+
+  /* 16px 미만이면 iOS에서 입력칸에 포커스될 때 화면이 확대된다 */
+  .hymn-row .note-input {
+    font-size: 16px;
   }
 
   .schedule-table .col-week {

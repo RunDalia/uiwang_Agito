@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import Header from './components/Header';
 import LoginModal from './components/LoginModal';
 import ScheduleSection from './components/ScheduleSection';
 import MassInfoSection from './components/MassInfoSection';
+import HymnSection from './components/HymnSection';
 import { getTargetYearMonth, getMonthKey } from './utils/dateUtils';
 import { DEFAULT_MEMBERS } from './data/members';
 import './App.css';
@@ -22,6 +23,11 @@ function App() {
   // schedule: { [monthKey]: { [weekLabel]: { [part]: {mode, name} } } } 형태의 로컬 캐시.
   // Firestore에서 monthKey별 문서를 불러와 이 캐시에 채워 넣는다.
   const [schedule, setSchedule] = useState({});
+  // hymns: { [monthKey]: { [weekLabel]: { [part]: {number, title} } } } 형태의 성가표 캐시.
+  // 배정표와 같은 schedules/{monthKey} 문서의 hymns 필드에 저장한다.
+  const [hymns, setHymns] = useState({});
+  // 수정했지만 아직 저장하지 않은 달(monthKey) 목록
+  const dirtyMonthsRef = useRef(new Set());
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [loadError, setLoadError] = useState('');
@@ -47,9 +53,11 @@ function App() {
 
     getDoc(doc(db, 'schedules', monthKey))
       .then((snap) => {
-        if (cancelled) return;
-        const weeks = snap.exists() ? snap.data().weeks || {} : {};
-        setSchedule((prev) => ({ ...prev, [monthKey]: weeks }));
+        // 저장하지 않은 수정 내용이 있는 달은 서버 값으로 덮어쓰지 않는다.
+        if (cancelled || dirtyMonthsRef.current.has(monthKey)) return;
+        const data = snap.exists() ? snap.data() : {};
+        setSchedule((prev) => ({ ...prev, [monthKey]: data.weeks || {} }));
+        setHymns((prev) => ({ ...prev, [monthKey]: data.hymns || {} }));
       })
       .catch((err) => {
         if (!cancelled) setLoadError(`데이터를 불러오지 못했습니다: ${err.message}`);
@@ -81,8 +89,36 @@ function App() {
     };
   }, []);
 
-  const handleToggleAdmin = () => {
+  const saveMonth = async (targetMonthKey) => {
+    await setDoc(
+      doc(db, 'schedules', targetMonthKey),
+      {
+        weeks: schedule[targetMonthKey] || {},
+        hymns: hymns[targetMonthKey] || {},
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    dirtyMonthsRef.current.delete(targetMonthKey);
+  };
+
+  const handleToggleAdmin = async () => {
     if (isAdmin) {
+      // 로그아웃할 때 저장하지 않은 수정 내용이 있으면 저장하고 알려준다.
+      const dirtyMonths = [...dirtyMonthsRef.current];
+      if (dirtyMonths.length > 0) {
+        setIsSaving(true);
+        try {
+          await Promise.all(dirtyMonths.map(saveMonth));
+          alert('수정된 내용이 저장되었습니다.');
+        } catch (err) {
+          alert(`저장하지 못했습니다: ${err.message}\n다시 시도해 주세요.`);
+          return;
+        } finally {
+          setIsSaving(false);
+        }
+      }
+      setSaveStatus('');
       setIsAdmin(false);
       return;
     }
@@ -112,6 +148,26 @@ function App() {
         },
       };
     });
+    dirtyMonthsRef.current.add(targetMonthKey);
+    setSaveStatus('');
+  };
+
+  const handleChangeHymn = (targetMonthKey, weekLabel, part, value) => {
+    setHymns((prev) => {
+      const monthData = prev[targetMonthKey] || {};
+      const weekData = monthData[weekLabel] || {};
+      return {
+        ...prev,
+        [targetMonthKey]: {
+          ...monthData,
+          [weekLabel]: {
+            ...weekData,
+            [part]: value,
+          },
+        },
+      };
+    });
+    dirtyMonthsRef.current.add(targetMonthKey);
     setSaveStatus('');
   };
 
@@ -119,14 +175,7 @@ function App() {
     setIsSaving(true);
     setSaveStatus('');
     try {
-      await setDoc(
-        doc(db, 'schedules', targetMonthKey),
-        {
-          weeks: schedule[targetMonthKey] || {},
-          updatedAt: serverTimestamp(),
-        },
-        { merge: true }
-      );
+      await saveMonth(targetMonthKey);
       setSaveStatus(`저장되었습니다 (${targetMonthKey})`);
     } catch (err) {
       setSaveStatus(`저장 실패: ${err.message}`);
@@ -156,6 +205,17 @@ function App() {
           members={members}
         />
         <MassInfoSection />
+        <HymnSection
+          year={year}
+          month={month}
+          monthKey={monthKey}
+          isAdmin={isAdmin}
+          hymns={hymns}
+          onChangeHymn={handleChangeHymn}
+          onSave={handleSave}
+          isSaving={isSaving}
+          saveStatus={saveStatus}
+        />
       </main>
       {isLoginOpen && <LoginModal onSubmit={handleLogin} onClose={() => setIsLoginOpen(false)} />}
     </div>
