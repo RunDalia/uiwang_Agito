@@ -221,7 +221,7 @@
 }
 
 .schedule-table .col-week {
-  width: 96px;
+  width: 104px;
 }
 
 .schedule-table .col-note {
@@ -249,8 +249,7 @@
   font-weight: 600;
   color: var(--color-navy);
   font-size: 13px;
-  white-space: normal;
-  word-break: keep-all;
+  white-space: nowrap;
 }
 
 .schedule-table tbody tr.week-highlight td {
@@ -335,7 +334,7 @@
   }
 
   .schedule-table .col-week {
-    width: 72px;
+    width: 88px;
   }
 
   .schedule-table .col-note {
