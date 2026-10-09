@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px;
-  background: var(--color-navy);
+  background: var(--color-primary);
   color: var(--color-white);
 }
 
@@ -24,7 +24,7 @@
 
 .app-header-sub {
   font-size: 14px;
-  color: #bcd6ea;
+  color: #c9dcd1;
   letter-spacing: 0.02em;
 }
 
@@ -49,8 +49,8 @@
 }
 
 .admin-toggle-active {
-  background: var(--color-sky);
-  border-color: var(--color-sky);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
   font-weight: 600;
 }
 
@@ -68,7 +68,7 @@
   border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 20px 22px;
-  box-shadow: 0 2px 10px rgba(15, 61, 99, 0.05);
+  box-shadow: 0 2px 10px rgba(38, 58, 48, 0.05);
 }
 
 .section-header {
@@ -82,7 +82,7 @@
 
 .section-header h2 {
   font-size: 18px;
-  color: var(--color-navy);
+  color: var(--color-primary);
 }
 
 /* ---------- Buttons ---------- */
@@ -92,7 +92,7 @@
   padding: 8px 14px;
   font-size: 13px;
   background: var(--color-white);
-  color: var(--color-navy);
+  color: var(--color-primary);
   transition: background 0.15s ease, color 0.15s ease;
 }
 
@@ -102,18 +102,18 @@
 }
 
 .btn-primary {
-  background: var(--color-sky);
-  border-color: var(--color-sky);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
   color: var(--color-white);
   font-weight: 600;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #276ba3;
+  background: #3a6352;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: var(--color-sky-light);
+  background: var(--color-accent-light);
 }
 
 .btn-tab {
@@ -121,8 +121,8 @@
 }
 
 .btn-tab-active {
-  background: var(--color-navy);
-  border-color: var(--color-navy);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   color: var(--color-white);
 }
 
@@ -135,7 +135,7 @@
 .mass-info-note {
   font-size: 13px;
   color: var(--color-text-muted);
-  background: var(--color-sky-light);
+  background: var(--color-accent-light);
   border-radius: 8px;
   padding: 10px 12px;
   margin-bottom: 14px;
@@ -151,11 +151,11 @@
 }
 
 .missa-title {
-  color: var(--color-navy);
+  color: var(--color-primary);
   font-size: 17px;
   margin-bottom: 14px;
   padding-bottom: 10px;
-  border-bottom: 2px solid var(--color-sky-light);
+  border-bottom: 2px solid var(--color-accent-light);
 }
 
 .mass-field {
@@ -172,7 +172,7 @@
 }
 
 .mass-field-label {
-  color: var(--color-sky);
+  color: var(--color-accent);
   font-weight: 600;
 }
 
@@ -205,7 +205,7 @@
 .month-label {
   font-weight: 600;
   font-size: 16px;
-  color: var(--color-navy);
+  color: var(--color-primary);
   white-space: nowrap;
 }
 
@@ -237,17 +237,17 @@
 }
 
 .schedule-table thead th {
-  background: var(--color-sky-light);
-  color: var(--color-navy);
+  background: var(--color-accent-light);
+  color: var(--color-primary);
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
 }
 
 .week-cell {
-  background: #fbfdfe;
+  background: #fbfcfa;
   font-weight: 600;
-  color: var(--color-navy);
+  color: var(--color-primary);
   font-size: 13px;
   white-space: nowrap;
 }
@@ -288,7 +288,7 @@
 .slot-select:focus,
 .slot-text-input:focus,
 .note-input:focus {
-  outline: 2px solid var(--color-sky);
+  outline: 2px solid var(--color-accent);
   outline-offset: 1px;
 }
 
@@ -301,7 +301,7 @@
 
 .save-status {
   font-size: 13px;
-  color: var(--color-sky);
+  color: var(--color-accent);
   font-weight: 600;
 }
 
@@ -315,7 +315,7 @@
 .hymn-week-title {
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-navy);
+  color: var(--color-primary);
   margin-bottom: 8px;
 }
 
@@ -342,14 +342,14 @@
 }
 
 .hymn-part {
-  color: var(--color-sky);
+  color: var(--color-accent);
   font-weight: 600;
   white-space: nowrap;
 }
 
 .hymn-number {
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-primary);
 }
 
 .hymn-empty {
@@ -395,7 +395,7 @@
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: rgba(15, 61, 99, 0.45);
+  background: rgba(38, 58, 48, 0.45);
 }
 
 .modal {
@@ -404,12 +404,12 @@
   background: var(--color-white);
   border-radius: 14px;
   padding: 20px 22px;
-  box-shadow: 0 10px 30px rgba(15, 61, 99, 0.25);
+  box-shadow: 0 10px 30px rgba(38, 58, 48, 0.25);
 }
 
 .modal h2 {
   font-size: 17px;
-  color: var(--color-navy);
+  color: var(--color-primary);
   margin-bottom: 14px;
 }
 
@@ -425,7 +425,7 @@
 }
 
 .modal-input:focus {
-  outline: 2px solid var(--color-sky);
+  outline: 2px solid var(--color-accent);
   outline-offset: 1px;
 }
 
