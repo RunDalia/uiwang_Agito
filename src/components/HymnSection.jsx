@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import MonthNav from './MonthNav';
 import { SONGS } from '../data/songs';
 import { getSaturdaysOfMonth, getNearestUpcomingSaturday, formatDateKey } from '../utils/dateUtils';
 
@@ -13,7 +14,19 @@ const HYMN_PARTS = [
 
 const EMPTY_HYMN = { number: '', title: '' };
 
-function HymnSection({ year, month, monthKey, isAdmin, hymns, onChangeHymn, onSave, isSaving, saveStatus }) {
+function HymnSection({
+  monthOffset,
+  setMonthOffset,
+  year,
+  month,
+  monthKey,
+  isAdmin,
+  hymns,
+  onChangeHymn,
+  onSave,
+  isSaving,
+  saveStatus,
+}) {
   const [showAll, setShowAll] = useState(false);
 
   const saturdays = useMemo(() => getSaturdaysOfMonth(year, month), [year, month]);
@@ -46,6 +59,8 @@ function HymnSection({ year, month, monthKey, isAdmin, hymns, onChangeHymn, onSa
           </button>
         )}
       </div>
+
+      <MonthNav year={year} month={month} monthOffset={monthOffset} setMonthOffset={setMonthOffset} />
 
       {visibleWeeks.map((week) => {
         const weekData = monthData[week.label] || {};

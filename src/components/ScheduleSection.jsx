@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
+import MonthNav from './MonthNav';
 import SlotInput from './SlotInput';
 import { LITURGY_PARTS } from '../data/members';
 import {
   getSaturdaysOfMonth,
-  getMonthLabel,
   getNearestUpcomingSaturday,
   formatDateKey,
 } from '../utils/dateUtils';
 
-const MAX_MONTH_OFFSET = 1; // 오늘이 속한 달 기준 앞뒤로 한 달씩만 볼 수 있다
 const NOTE_KEY = '비고';
 const NOTE_MAX_LENGTH = 100;
 
@@ -28,7 +27,6 @@ function ScheduleSection({
   saveStatus,
   members,
 }) {
-  const monthLabel = getMonthLabel(year, month);
   const saturdays = useMemo(() => getSaturdaysOfMonth(year, month), [year, month]);
   const nearestWeekKey = useMemo(() => formatDateKey(getNearestUpcomingSaturday(new Date())), []);
 
@@ -40,23 +38,7 @@ function ScheduleSection({
         <h2>주차별 전례 봉사자 배정</h2>
       </div>
 
-      <div className="month-nav">
-        <button
-          className="btn btn-secondary"
-          onClick={() => setMonthOffset((v) => Math.max(v - 1, -MAX_MONTH_OFFSET))}
-          disabled={monthOffset <= -MAX_MONTH_OFFSET}
-        >
-          ← 지난 달 보기
-        </button>
-        <span className="month-label">{monthLabel}</span>
-        <button
-          className="btn btn-secondary"
-          onClick={() => setMonthOffset((v) => Math.min(v + 1, MAX_MONTH_OFFSET))}
-          disabled={monthOffset >= MAX_MONTH_OFFSET}
-        >
-          다음 달 보기 →
-        </button>
-      </div>
+      <MonthNav year={year} month={month} monthOffset={monthOffset} setMonthOffset={setMonthOffset} />
 
       {isLoading && <p className="mass-info-status">불러오는 중...</p>}
       {loadError && <p className="mass-info-status mass-info-error">{loadError}</p>}

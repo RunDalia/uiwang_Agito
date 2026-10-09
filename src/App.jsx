@@ -206,6 +206,8 @@ function App() {
         />
         <MassInfoSection />
         <HymnSection
+          monthOffset={monthOffset}
+          setMonthOffset={setMonthOffset}
           year={year}
           month={month}
           monthKey={monthKey}
