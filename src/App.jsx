@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import Header from './components/Header';
+import LoginModal from './components/LoginModal';
 import ScheduleSection from './components/ScheduleSection';
 import MassInfoSection from './components/MassInfoSection';
 import { getTargetYearMonth, getMonthKey } from './utils/dateUtils';
@@ -15,6 +16,7 @@ const ADMIN_PASSWORD = 'agito2026';
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [monthOffset, setMonthOffset] = useState(0);
 
   // schedule: { [monthKey]: { [weekLabel]: { [part]: {mode, name} } } } 형태의 로컬 캐시.
@@ -84,12 +86,15 @@ function App() {
       setIsAdmin(false);
       return;
     }
-    const input = window.prompt('관리자 비밀번호를 입력하세요.');
-    if (input === ADMIN_PASSWORD) {
-      setIsAdmin(true);
-    } else if (input !== null) {
-      alert('비밀번호가 올바르지 않습니다.');
-    }
+    setIsLoginOpen(true);
+  };
+
+  // 비밀번호가 맞으면 관리자 모드로 전환하고 true를, 틀리면 false를 반환한다.
+  const handleLogin = (password) => {
+    if (password !== ADMIN_PASSWORD) return false;
+    setIsAdmin(true);
+    setIsLoginOpen(false);
+    return true;
   };
 
   const handleChangeSlot = (targetMonthKey, weekLabel, part, value) => {
@@ -152,6 +157,7 @@ function App() {
         />
         <MassInfoSection />
       </main>
+      {isLoginOpen && <LoginModal onSubmit={handleLogin} onClose={() => setIsLoginOpen(false)} />}
     </div>
   );
 }

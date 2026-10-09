@@ -9,7 +9,7 @@ function Header({ isAdmin, onToggleAdmin }) {
         className={`admin-toggle ${isAdmin ? 'admin-toggle-active' : ''}`}
         onClick={onToggleAdmin}
       >
-        {isAdmin ? '관리자 모드 (ON)' : '조회 모드'}
+        {isAdmin ? '로그아웃' : '로그인'}
       </button>
     </header>
   );
