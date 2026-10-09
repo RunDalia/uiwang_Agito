@@ -51,7 +51,10 @@ function breakBeforeSymbol(text, symbol) {
 // 장,절 표시가 끝나는 지점에서 줄바꿈하고, 맨 끝의 "◎ ..." 응답 문구를 마지막 줄로 뺀다.
 // 그 응답 바로 앞(본문 끝)의 "주님의 말씀입니다."도 한 줄을 따로 차지하게 한다.
 function formatReadingBody(text) {
-  const result = text.replace(/(입니다\.\d[\d,.\-]*)\s+/, '$1\n');
+  // 장,절은 "25,6-10ㄱ"처럼 숫자 외 글자가 붙기도 하므로 공백 전까지를 통째로 장,절로 본다.
+  // 마크업에 따라 "입니다. 22,1-10"처럼 띄어져 나오는 경우는 본문 첫머리의 절 번호("1 그 무렵")와
+  // 헷갈리지 않도록 "장,절" 형태일 때만 장,절로 취급한다.
+  const result = text.replace(/(입니다\.)(?:(\d\S*)|\s+(\d+,\S*))\s+/, '$1$2$3\n');
   const lastCircle = result.lastIndexOf('◎');
   const body = lastCircle > 0 ? result.slice(0, lastCircle).trimEnd() : result.trimEnd();
   const response = lastCircle > 0 ? `\n${result.slice(lastCircle)}` : '';
