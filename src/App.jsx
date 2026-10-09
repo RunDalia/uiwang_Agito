@@ -6,6 +6,7 @@ import LoginModal from './components/LoginModal';
 import ScheduleSection from './components/ScheduleSection';
 import MassInfoSection from './components/MassInfoSection';
 import HymnSection from './components/HymnSection';
+import AltarServerSection from './components/AltarServerSection';
 import { getTargetYearMonth, getMonthKey } from './utils/dateUtils';
 import { DEFAULT_MEMBERS } from './data/members';
 import './App.css';
@@ -217,6 +218,14 @@ function App() {
           onSave={handleSave}
           isSaving={isSaving}
           saveStatus={saveStatus}
+        />
+        <AltarServerSection
+          monthOffset={monthOffset}
+          setMonthOffset={setMonthOffset}
+          year={year}
+          month={month}
+          monthKey={monthKey}
+          isAdmin={isAdmin}
         />
       </main>
       {isLoginOpen && <LoginModal onSubmit={handleLogin} onClose={() => setIsLoginOpen(false)} />}

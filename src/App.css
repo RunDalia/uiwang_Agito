@@ -357,6 +357,35 @@
   color: var(--color-text-muted);
 }
 
+/* ---------- Altar server section ---------- */
+.altar-image {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: zoom-in;
+}
+
+.btn-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* 이미지를 원래 크기로 보는 화면. 아무 곳이나 누르면 닫힌다. */
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.88);
+  cursor: zoom-out;
+}
+
+.image-viewer img {
+  display: block;
+  margin: 0 auto;
+}
+
 /* ---------- Login modal ---------- */
 .modal-backdrop {
   position: fixed;
