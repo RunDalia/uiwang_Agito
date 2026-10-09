@@ -13,10 +13,13 @@ const FIELDS = [
 ];
 
 // 필드별로 굵게 표시할 줄을 판단하는 규칙
+// 본문의 끝 줄: 전체의 마지막 줄이거나, "<또는>"으로 다음 본문이 이어지기 직전 줄
+const isReadingEnd = (idx, lines) => idx === lines.length - 1 || lines[idx + 1] === '<또는>';
+
 const BOLD_LINE_RULES = {
-  firstReading: (line, idx, lines) => line.startsWith('▥') || (idx === lines.length - 1 && line.startsWith('◎')),
-  secondReading: (line, idx, lines) => line.startsWith('▥') || (idx === lines.length - 1 && line.startsWith('◎')),
-  gospel: (line, idx, lines) => line.startsWith('✠') || (idx === lines.length - 1 && line.includes('◎')),
+  firstReading: (line, idx, lines) => line.startsWith('▥') || (isReadingEnd(idx, lines) && line.startsWith('◎')),
+  secondReading: (line, idx, lines) => line.startsWith('▥') || (isReadingEnd(idx, lines) && line.startsWith('◎')),
+  gospel: (line, idx, lines) => line.startsWith('✠') || (isReadingEnd(idx, lines) && line.includes('◎')),
   responsorialPsalm: (line, idx) => idx === 0,
   universalPrayer: (line) => /^\d+\.\s/.test(line),
 };

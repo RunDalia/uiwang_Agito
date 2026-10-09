@@ -49,13 +49,22 @@ function breakBeforeSymbol(text, symbol) {
 
 // 제1독서/제2독서/복음 본문: "...말씀입니다.24,18-22" / "...복음입니다.10,17-22"처럼
 // 장,절 표시가 끝나는 지점에서 줄바꿈하고, 맨 끝의 "◎ ..." 응답 문구를 마지막 줄로 뺀다.
+// 그 응답 바로 앞(본문 끝)의 "주님의 말씀입니다."도 한 줄을 따로 차지하게 한다.
 function formatReadingBody(text) {
-  let result = text.replace(/(입니다\.\d[\d,.\-]*)\s+/, '$1\n');
+  const result = text.replace(/(입니다\.\d[\d,.\-]*)\s+/, '$1\n');
   const lastCircle = result.lastIndexOf('◎');
-  if (lastCircle > 0) {
-    result = `${result.slice(0, lastCircle).trimEnd()}\n${result.slice(lastCircle)}`;
-  }
-  return result;
+  const body = lastCircle > 0 ? result.slice(0, lastCircle).trimEnd() : result.trimEnd();
+  const response = lastCircle > 0 ? `\n${result.slice(lastCircle)}` : '';
+  return `${body.replace(/\s*(주님의 말씀입니다\.)$/, '\n$1')}${response}`;
+}
+
+// 제1독서/제2독서/복음: 긴/짧은 본문이 "<또는>"으로 이어지는 날에는 "<또는>"을 한 줄로 떼고,
+// 앞뒤 본문을 각각 같은 형태로 정리한다.
+function formatReading(text, symbol) {
+  return text
+    .split(/\s*<또는>\s*/)
+    .map((part) => formatReadingBody(breakBeforeSymbol(part, symbol)))
+    .join('\n<또는>\n');
 }
 
 // 화답송: 첫 후렴(◎ ...) 문장이 끝나는 지점을 포함해, '○'로 시작하는 절 앞에서는
@@ -152,9 +161,9 @@ export function parseMissaHtml(html) {
 
   result.responsorialPsalm = formatResponsorialPsalm(result.responsorialPsalm);
   result.gospelAcclamation = formatGospelAcclamation(result.gospelAcclamation);
-  result.firstReading = formatReadingBody(breakBeforeSymbol(result.firstReading, '▥'));
-  result.secondReading = formatReadingBody(breakBeforeSymbol(result.secondReading, '▥'));
-  result.gospel = formatReadingBody(breakBeforeSymbol(result.gospel, '✠'));
+  result.firstReading = formatReading(result.firstReading, '▥');
+  result.secondReading = formatReading(result.secondReading, '▥');
+  result.gospel = formatReading(result.gospel, '✠');
   result.universalPrayer = formatUniversalPrayer(result.universalPrayer);
 
   return result;

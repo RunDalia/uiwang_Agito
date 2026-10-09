@@ -364,8 +364,9 @@
   }
 
   .mass-field {
-    grid-template-columns: 68px 1fr;
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 10px 0;
   }
 
   .schedule-table .col-week {
