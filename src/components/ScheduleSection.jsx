@@ -8,7 +8,7 @@ import {
   formatDateKey,
 } from '../utils/dateUtils';
 
-const MAX_MONTH_OFFSET = 11; // 이번 달 포함 최대 12개월
+const MAX_MONTH_OFFSET = 1; // 오늘이 속한 달 기준 앞뒤로 한 달씩만 볼 수 있다
 const NOTE_KEY = '비고';
 const NOTE_MAX_LENGTH = 100;
 
@@ -38,23 +38,24 @@ function ScheduleSection({
     <section className="card schedule-section">
       <div className="section-header">
         <h2>주차별 전례 봉사자 배정</h2>
-        <div className="month-nav">
-          <span className="month-label">{monthLabel}</span>
-          <button
-            className="btn btn-secondary"
-            onClick={() => setMonthOffset(0)}
-            disabled={monthOffset === 0}
-          >
-            오늘
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => setMonthOffset((v) => Math.min(v + 1, MAX_MONTH_OFFSET))}
-            disabled={monthOffset >= MAX_MONTH_OFFSET}
-          >
-            다음 달 보기 →
-          </button>
-        </div>
+      </div>
+
+      <div className="month-nav">
+        <button
+          className="btn btn-secondary"
+          onClick={() => setMonthOffset((v) => Math.max(v - 1, -MAX_MONTH_OFFSET))}
+          disabled={monthOffset <= -MAX_MONTH_OFFSET}
+        >
+          ← 지난 달 보기
+        </button>
+        <span className="month-label">{monthLabel}</span>
+        <button
+          className="btn btn-secondary"
+          onClick={() => setMonthOffset((v) => Math.min(v + 1, MAX_MONTH_OFFSET))}
+          disabled={monthOffset >= MAX_MONTH_OFFSET}
+        >
+          다음 달 보기 →
+        </button>
       </div>
 
       {isLoading && <p className="mass-info-status">불러오는 중...</p>}

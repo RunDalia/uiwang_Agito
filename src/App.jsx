@@ -4,7 +4,6 @@ import { db } from './firebase';
 import Header from './components/Header';
 import ScheduleSection from './components/ScheduleSection';
 import MassInfoSection from './components/MassInfoSection';
-import MemberManageSection from './components/MemberManageSection';
 import { getTargetYearMonth, getMonthKey } from './utils/dateUtils';
 import { DEFAULT_MEMBERS } from './data/members';
 import './App.css';
@@ -27,10 +26,8 @@ function App() {
   const [saveStatus, setSaveStatus] = useState('');
 
   // 단원 명단: Firestore(config/members)에 저장된 값이 있으면 그것을, 없으면
-  // data/members.js의 기본값을 사용한다. 관리자가 추가하면 Firestore에 반영된다.
+  // data/members.js의 기본값을 사용한다.
   const [members, setMembers] = useState(DEFAULT_MEMBERS);
-  const [isMemberSaving, setIsMemberSaving] = useState(false);
-  const [memberSaveStatus, setMemberSaveStatus] = useState('');
 
   const today = useMemo(() => new Date(), []);
   const { year, month } = useMemo(
@@ -133,25 +130,6 @@ function App() {
     }
   };
 
-  const handleAddMember = async (name, category) => {
-    const nextMembers = [...members, { name, category }];
-    setIsMemberSaving(true);
-    setMemberSaveStatus('');
-    try {
-      await setDoc(
-        doc(db, 'config', 'members'),
-        { list: nextMembers, updatedAt: serverTimestamp() },
-        { merge: true }
-      );
-      setMembers(nextMembers);
-      setMemberSaveStatus(`'${name}'님을 추가했습니다.`);
-    } catch (err) {
-      setMemberSaveStatus(`추가 실패: ${err.message}`);
-    } finally {
-      setIsMemberSaving(false);
-    }
-  };
-
   return (
     <div className="app-shell">
       <Header isAdmin={isAdmin} onToggleAdmin={handleToggleAdmin} />
@@ -173,13 +151,6 @@ function App() {
           members={members}
         />
         <MassInfoSection />
-        <MemberManageSection
-          members={members}
-          isAdmin={isAdmin}
-          onAddMember={handleAddMember}
-          isSaving={isMemberSaving}
-          saveStatus={memberSaveStatus}
-        />
       </main>
     </div>
   );

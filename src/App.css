@@ -187,14 +187,26 @@
 
 /* ---------- Schedule section ---------- */
 .month-nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 12px;
+  margin-bottom: 16px;
+}
+
+.month-nav .btn:first-child {
+  justify-self: start;
+}
+
+.month-nav .btn:last-child {
+  justify-self: end;
 }
 
 .month-label {
   font-weight: 600;
+  font-size: 16px;
   color: var(--color-navy);
+  white-space: nowrap;
 }
 
 .table-scroll {
@@ -294,66 +306,6 @@
   font-weight: 600;
 }
 
-/* ---------- Member management section ---------- */
-.member-group {
-  margin-bottom: 14px;
-}
-
-.member-group:last-of-type {
-  margin-bottom: 0;
-}
-
-.member-group-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-sky);
-  margin-bottom: 8px;
-}
-
-.member-chip-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.member-chip {
-  background: var(--color-sky-light);
-  color: var(--color-navy);
-  border-radius: 999px;
-  padding: 5px 12px;
-  font-size: 13px;
-}
-
-.member-empty {
-  color: var(--color-text-muted);
-  font-size: 13px;
-}
-
-.member-add-form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
-}
-
-.member-add-form select,
-.member-add-form input {
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 7px 10px;
-  font-size: 13px;
-  background: var(--color-white);
-  color: var(--color-text);
-}
-
-.member-add-form input {
-  flex: 1;
-  min-width: 140px;
-}
-
 @media (max-width: 640px) {
   .app-header {
     padding: 16px;
@@ -367,6 +319,19 @@
     grid-template-columns: 1fr;
     gap: 4px;
     padding: 10px 0;
+  }
+
+  .month-nav {
+    gap: 6px;
+  }
+
+  .month-nav .btn {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .month-label {
+    font-size: 14px;
   }
 
   .schedule-table .col-week {
