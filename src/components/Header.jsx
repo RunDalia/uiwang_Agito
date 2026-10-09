@@ -3,7 +3,7 @@ function Header({ isAdmin, onToggleAdmin }) {
     <header className="app-header">
       <div className="app-header-title">
         <span className="app-header-sub">의왕성당</span>
-        <h1>아키토 Agito</h1>
+        <h1>Agito</h1>
       </div>
       <button
         className={`admin-toggle ${isAdmin ? 'admin-toggle-active' : ''}`}
